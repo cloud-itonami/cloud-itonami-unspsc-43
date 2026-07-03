@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-unspsc-43"
+ :itonami.blueprint/name "Independent IT Asset Recovery & E-Waste Refurbishment Robotics"
+ :itonami.blueprint/unspsc-segment "43"
+ :itonami.blueprint/domain :circular/it-asset-disposition
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:e-waste-reduction :data-safety :digital-access-affordability]
+ :itonami.blueprint/governor :it-asset-recovery-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :telemetry :audit-ledger]
+ :itonami.blueprint/status :public-oss}
