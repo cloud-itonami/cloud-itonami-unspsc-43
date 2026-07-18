@@ -12,6 +12,18 @@ instead of renting a closed ITAD SaaS. Complements
 [`cloud-itonami-3830`](https://github.com/cloud-itonami/cloud-itonami-3830)
 (Local Materials Recovery) at the electronics-specific layer.
 
+**Status: design blueprint, no code implemented yet.** This repository
+has zero files under `src/` and no `test/` directory — the Triage
+Advisor and IT Asset Recovery Governor described below do not exist in
+code. It is not (yet) a governed Advisor⊣Governor actuation actor; the
+Core Contract section specifies what that pipeline is intended to
+enforce once built, not current behavior. See
+[`cloud-itonami-isco-1324`](https://github.com/cloud-itonami/cloud-itonami-isco-1324)
+for this fleet's minimal implemented reference (`actor`/`advisor`/
+`governor`/`store`), and the `cloud-itonami-assoc-*` /
+`cloud-itonami-municipality-*` / `cloud-itonami-lei-*` repos for this
+fleet's honest not-an-actuation-actor disclaimer pattern.
+
 ## Robotics premise
 
 All cloud-itonami verticals are designed on the premise that a **robot
@@ -23,7 +35,7 @@ never dispatches hardware itself; `:high`/`:safety-critical` actions (a
 device containing unverified sensitive data, or a battery-safety hazard)
 require human sign-off before any resale or recycling.
 
-## Core Contract
+## Core Contract (design intent — not yet implemented)
 
 ```text
 device intake + chain-of-custody registry
@@ -35,10 +47,12 @@ Triage Advisor -> IT Asset Recovery Governor -> disposition, or human sign-off
 robot triage actions (gated) + data-wipe/disposition record + audit ledger
 ```
 
-No automated triage can dispatch a robot action the governor refuses,
-release a device for resale without verified data-wipe evidence, or
-suppress a chain-of-custody record without governor approval and audit
-evidence.
+**No code exists yet in this repo** — no `src/`, no `test/`, only this
+design document plus `blueprint.edn` and `docs/`. Once built, no
+automated triage will be able to dispatch a robot action the governor
+refuses, release a device for resale without verified data-wipe
+evidence, or suppress a chain-of-custody record without governor
+approval and audit evidence — but none of that is enforced today.
 
 ## Capability layer
 
