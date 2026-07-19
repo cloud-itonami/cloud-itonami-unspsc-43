@@ -7,4 +7,34 @@
  :itonami.blueprint/governor :it-asset-recovery-governor
  :itonami.blueprint/robotics true
  :itonami.blueprint/required-technologies [:robotics :identity :telemetry :audit-ledger]
- :itonami.blueprint/status :public-oss}
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/implemented-slice
+ "TriageAdvisor ⊣ IT Asset Recovery Governor, langgraph-clj StateGraph,
+ append-only audit ledger. An ITAD (IT Asset Disposition) operator
+ coordination actor (device-intake data logging, data-wipe scheduling
+ against an intake device, battery-hazard/unverified-sensitive-data
+ concern flagging, resell/refurbish/certified-recycle disposition
+ proposal against a device) -- not direct destruction-equipment-
+ actuation authority and not R2v3-conformance/data-destruction-
+ certification authority. Four ops (`:log-device-intake` /
+ `:schedule-data-wipe` / `:flag-safety-concern` / `:propose-
+ disposition`), all `:effect :propose` only. Thirteen concrete
+ governor checks elaborate this blueprint's four HARD invariants:
+ propose-only effect, closed op allowlist, closed proposal-effect
+ allowlist (no direct destruction-equipment control), permanent
+ destruction-equipment-actuate block, permanent R2v3-conformance/
+ data-destruction-certification-authority block, independent device
+ verification/registration before EITHER wipe scheduling or
+ disposition proposal (single-entity gate, documented departure from
+ this fleet's usual two-entity shape -- see docs/adr/0001-
+ architecture.md Decision 0), independent data-wipe-sufficiency
+ recompute against NIST SP 800-88's own Clear/Purge/Destroy taxonomy
+ for data-bearing dispositions (resell/refurbish require Purge or
+ Destroy, never trusted on the advisor's self-report), double-schedule
+ guard, double-disposition guard, disposition-value validation,
+ category validation, functional-status validation, and wipe-level
+ validation. Safety-concern flagging (battery-hazard/thermal-runaway/
+ unverified-sensitive-data) ALWAYS escalates to a human ITAD
+ coordinator; `:log-device-intake` is the only op eligible to
+ auto-commit, and only at phase 3 when governor-clean."}
