@@ -1,5 +1,5 @@
 (ns itad.sim
-  "Demo driver -- `clojure -M:dev:run`. Walks a clean ITAD operator
+  "Demo driver -- `kbb -M:dev:run`. Walks a clean ITAD operator
   through intake -> data-wipe scheduling (escalate/approve) ->
   safety-concern flag (escalate/approve) -> disposition proposal
   (escalate/approve), then shows HARD-hold scenarios: a mis-wired
