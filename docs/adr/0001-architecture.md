@@ -198,9 +198,9 @@ coordinator blueprint.
 
 ## Verification
 
-- `cloud-itonami-unspsc-43`: `clojure -M:test` green (74 tests / 207
+- `cloud-itonami-unspsc-43`: `kbb -M:test` green (74 tests / 207
   assertions, 0 failures, 0 errors, verified from a fresh worktree
-  checkout), demo narrative (`clojure -M:dev:run`) exercises proposal
+  checkout), demo narrative (`kbb -M:dev:run`) exercises proposal
   submission, escalation, and every HARD-hold scenario directly
   (not-propose-effect, unknown-op, device-not-verified for both gated
   ops, insufficient-wipe-level, destruction-actuate-blocked,
@@ -215,7 +215,7 @@ coordinator blueprint.
 - `deps.edn` pins `io.github.kotoba-lang/langgraph` and
   `io.github.kotoba-lang/langchain` via `:local/root` directly in the
   top-level `:deps` (not only under a `:dev` alias), so a bare
-  `clojure -M:test` resolves offline inside the monorepo checkout.
+  `kbb -M:test` resolves offline inside the monorepo checkout.
 - NIST SP 800-88 Rev. 2 and R2v3 (SERI) were web-verified 2026-07-19
   against csrc.nist.gov / sustainableelectronics.org before being
   cited in `itad.registry` and `itad.governor` docstrings -- no

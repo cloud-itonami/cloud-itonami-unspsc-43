@@ -73,7 +73,7 @@ Portable `.cljc` namespaces under `src/itad/`:
 - `operation` -- the StateGraph (1 run = 1 coordination request);
   `sim` drives the demo.
 
-`clojure -M:test` (74 tests, 207 assertions, 0 failures). See
+`kbb -M:test` (74 tests, 207 assertions, 0 failures). See
 [`docs/adr/0001-architecture.md`](docs/adr/0001-architecture.md) for
 the full design, including why this build gates both write ops
 against a single `devices` entity rather than this fleet's usual
