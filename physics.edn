@@ -1,0 +1,44 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": a sorting/inspection robot performs device
+;; triage, functional testing and data-wipe verification for an IT asset
+;; recovery (ITAD) contractor; a battery-safety hazard needs human sign-off.
+;; Its physical work: moving a device from the intake conveyor to its
+;; disposition station, towing a cage of recyclables to the shredder bay,
+;; and a damaged Li-ion pack self-heating in the quarantine bin.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-unspsc-43"
+ :cases
+ [{:id :device-triage-pick
+   :kind :manipulator
+   :procedure "sorting arm lifts a returned device (laptop up to a rack server) off the intake conveyor onto the test/wipe station"
+   :params {:l1-m 0.70 :l2-m 0.60 :m1-kg 12.0 :m2-kg 8.0
+            :from [0.80 0.00] :to [0.30 0.60] :duration-s 3.0 :steps 500}
+   :sweep {:param :payload-kg :values [1.5 3.0 8.0 15.0 25.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 220.0 :basis "estimate: continuous shoulder torque of a 20 kg-payload-class sorting arm"}
+   :boundary {:lo 0.5 :hi 60.0}}
+  {:id :recycle-cage-to-shredder
+   :kind :transport
+   :procedure "AMR tows a cage of devices for recycling 50 m from triage to the shredder bay"
+   :params {:mass-kg 120.0 :distance-m 50.0 :v-max-mps 1.2 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 300.0 :crr 0.015 :cog-height-m 0.25
+            :payload-cog-height-m 0.70 :support-half-length-m 0.40 :max-time-s 900.0}
+   :sweep {:param :payload-kg :values [100.0 300.0 600.0 1000.0 1400.0]}
+   :quantity :cycle-time-s
+   :limit {:max 50.0 :basis "estimate: one cage run within the shredder bay's feed cycle"}
+   :boundary {:lo 10.0 :hi 2000.0}}
+  {:id :quarantined-pack-self-heating
+   :kind :thermal
+   :procedure "damaged laptop Li-ion pack self-heats in the quarantine bin (half thickness, symmetric); how long until its core reaches the onset of thermal runaway"
+   :params {:thickness-m 0.005 :conductivity-w-mk 1.0 :density-kg-m3 2500.0 :specific-heat-j-kgk 1000.0
+            :t0-c 25.0 :t-hot-c 25.0 :h-front-w-m2k 5.0 :h-back-w-m2k 0.0 :t-back-ambient-c 25.0
+            :threshold-c 80.0 :duration-s 14400.0 :nodes 11}
+   :sweep {:param :q-gen-w-m3 :values [20000.0 50000.0 100000.0 200000.0 400000.0]}
+   :quantity :time-to-threshold-s
+   :limit {:min 1800.0 :basis "estimate: 30 minutes for a person to respond after the robot flags a heating pack; 80 C as an onset of exothermic decomposition is itself an estimate to be sourced"}
+   :boundary {:lo 10000.0 :hi 1000000.0}}]}
